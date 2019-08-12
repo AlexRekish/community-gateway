@@ -1,0 +1,109 @@
+.fee-discounts__calculator-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  mix-blend-mode: normal;
+  //opacity: 0.2;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+  padding: 35px;
+}
+
+.fee-discounts__calculator {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 25px;
+}
+
+.fee-discounts__input {
+  //font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  border: none;
+  border-bottom: 1px solid #4d5475;
+  transition: 0.2s;
+  color: #fff;
+  width: 200px;
+  background: transparent;
+  padding-left: 12px;
+}
+
+.fee-discounts__input:focus {
+  outline: none;
+  border-bottom: 1px solid #fff;
+  transition: 0.2s;
+}
+
+.fee-discounts__label {
+  //font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  margin-bottom: 20px;
+}
+
+.fee-discounts__input-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.fee-discounts__input-nec {
+  position: relative;
+}
+
+.fee-discounts__input-nec.right input {
+  padding-right: 66px;
+  text-align: start;
+}
+
+.fee-discounts__input-nec:after {
+  position: absolute;
+  top: 0;
+  content: 'NEC';
+  font-size: 26px;
+}
+
+.fee-discounts__input-nec.right:after {
+  right: 5px;
+}
+
+.fee-discounts__input-percent {
+  position: relative;
+}
+
+.fee-discounts__input-percent.right input {
+  padding-right: 37px;
+  text-align: start;
+}
+
+.fee-discounts__input-percent:after {
+  position: absolute;
+  top: 0;
+  content: '%';
+  font-size: 26px;
+}
+
+.fee-discounts__input-percent.right:after {
+  right: 5px;
+}
+
+.fee-discounts__arrows {
+  margin-top: 40px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.trading {
+  margin-top: 8px !important;
+}
+
+.fee-discounts__link {
+  text-decoration: none;
+}
+
+.fee-discounts__link:hover {
+  text-shadow: #dce2ff;
+}
