@@ -36,13 +36,19 @@
   transition: 0.2s;
 }
 
-.fee-discounts__label {
+.fee-discounts__label,
+.fee-discounts__receive-label-bottom {
   //font-family: Montserrat;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;
   margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.fee-discounts__receive-label-bottom {
+  margin: unset;
 }
 
 .fee-discounts__input-content {
@@ -75,19 +81,19 @@
 }
 
 .fee-discounts__input-percent.right input {
-  padding-right: 37px;
+  padding-right: 65px;
   text-align: start;
 }
 
 .fee-discounts__input-percent:after {
   position: absolute;
   top: 0;
-  content: '%';
+  content: 'USD';
   font-size: 26px;
 }
 
 .fee-discounts__input-percent.right:after {
-  right: 5px;
+  right: 32px;
 }
 
 .fee-discounts__arrows {
@@ -106,4 +112,9 @@
 
 .fee-discounts__link:hover {
   text-shadow: #dce2ff;
+}
+
+.buy-and-burn__progress-bar-title-up {
+  display: flex;
+  flex-direction: column;
 }

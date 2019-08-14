@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component, createRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import './FeeDiscounts.scss';
 
-export default function FeeDiscounts(props) {
-  const validate = evt => {
+export default class FeeDiscounts extends Component {
+  validate = evt => {
     let theEvent = evt || window.event;
     let key;
     if (theEvent.type === 'paste') {
@@ -20,53 +20,78 @@ export default function FeeDiscounts(props) {
     }
   };
 
-  return (
-    <section className="landing__section">
-      <p className="landing__section-content">
-        Ethfinex Trustless is the most liquid and advanced decentralized exchange.
+  calcReceive = () => {
+    const input = this.receiveInput.current;
+    input.value = this.ownInput.current.value * 100;
+  };
+
+  ownInput = createRef();
+  receiveInput = createRef();
+
+  render() {
+    console.log('prank ', this.ownInput.current);
+    return (
+      <section className="landing__section">
+        <p className="landing__section-content">
+          Ethfinex Trustless is the most liquid and advanced decentralized exchange.
+          <br />
+          <br />
+          The value of Nectar will now be tied to the success of its decentralized exchange
+          products, of which Ethfinex Trustless is the first and largest.
+          <br />
+          <br />
+          As a consequence holding Nectar will entitle traders to fee discounts based
+          <br />
+        </p>
         <br />
-        The value of Nectar will now be tied to the success of its decentralized exchange products,
-        of which Ethfinex Trustless is the first and largest.
-        <br />
-        As a consequence holding Nectar will entitle traders to fee discounts based
-      </p>
-      <br />
-      <div className="fee-discounts__calculator-content">
-        <div className="fee-discounts__calculator">
-          <div className="fee-discounts__input-content">
-            <label htmlFor="own" className="fee-discounts__label">
-              Own
-            </label>
-            <span className="fee-discounts__input-nec right">
-              <input type="text" id="own" className="fee-discounts__input" onKeyPress={validate} />
-            </span>
+        <div className="fee-discounts__calculator-content">
+          <div className="fee-discounts__calculator">
+            <div className="fee-discounts__input-content">
+              <label htmlFor="own" className="fee-discounts__label">
+                Own
+              </label>
+              <span className="fee-discounts__input-nec right">
+                <input
+                  ref={this.ownInput}
+                  type="text"
+                  id="own"
+                  className="fee-discounts__input"
+                  onKeyPress={this.validate}
+                  onChange={this.calcReceive}
+                  defaultValue={0}
+                />
+              </span>
+            </div>
+            <div className="fee-discounts__arrows">
+              <img src="/images/icon-arrows.svg" alt="" />
+            </div>
+            <div className="fee-discounts__input-content">
+              <label htmlFor="discount" className="fee-discounts__label">
+                Receive 20% Fee discount ON
+              </label>
+              <span className="fee-discounts__input-percent right">
+                <input
+                  ref={this.receiveInput}
+                  type="text"
+                  id="discount"
+                  className="fee-discounts__input"
+                  onKeyPress={this.validate}
+                  value={Boolean(this.ownInput.current) ? this.ownInput.current.value * 100 : null}
+                />
+              </span>
+              <p className="fee-discounts__receive-label-bottom">30-day Trading volume</p>
+            </div>
           </div>
-          <div className="fee-discounts__arrows">
-            <img src="/images/icon-arrows.svg" alt="" />
-          </div>
-          <div className="fee-discounts__input-content">
-            <label htmlFor="discount" className="fee-discounts__label">
-              Receive fee discount
-            </label>
-            <span className="fee-discounts__input-percent right">
-              <input
-                type="text"
-                id="discount"
-                className="fee-discounts__input"
-                onKeyPress={validate}
-              />
-            </span>
-          </div>
+          <Link to="/" className="fee-discounts__link">
+            View fee calculation table
+          </Link>
         </div>
-        <Link to="/" className="fee-discounts__link ">
-          View fee calculation table
+        <br />
+        <p className="landing__section-content">Start trading on Ethfinex Trustless</p>
+        <Link to="/" className="new-listings__link trading">
+          Start Trading
         </Link>
-      </div>
-      <br />
-      <p className="landing__section-content">Start trading on Ethfinex Trustless</p>
-      <Link to="/" className="new-listings__link trading">
-        Start Trading
-      </Link>
-    </section>
-  );
+      </section>
+    );
+  }
 }
