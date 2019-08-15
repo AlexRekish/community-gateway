@@ -1,14 +1,36 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { geTotalUSD } from '../../../../actions/getTotalUSDValue';
 
 import './BuyAndBurn.scss';
 
-class BuyAndBurn extends Component {
+export default class BuyAndBurn extends Component {
+  state = {
+    res: { TotalUSDValue: 0 },
+  };
+
   componentDidMount() {
-    this.props.geTotalUSD();
+    this.getUSD();
   }
+
+  getUSD = async () => {
+    try {
+      await fetch(
+        'https://cors-anywhere.herokuapp.com/https://efx-trustless-data.herokuapp.com/api/v1/last24HoursVolume',
+        {
+          method: 'GET',
+          mode: 'cors',
+        }
+      )
+        .then(res => res.json())
+        .then(data => {
+          this.setState({
+            res: data,
+          });
+        });
+    } catch (e) {
+      console.log('Error ', e);
+    }
+  };
 
   numberWithSpace = number => {
     return number
@@ -18,11 +40,12 @@ class BuyAndBurn extends Component {
   };
 
   render() {
-    const { response } = this.props;
+    const { res } = this.state;
+    const widthProgressBar = (res?.TotalUSDValue * 100) / 3000000 || 0;
 
     return (
       <section className="landing__section">
-        <p className="landing__section-content">
+        <p className="landing__section-content section-margin">
           <span className="bold-text">10%</span> of all revenues earned on trading volumes above{' '}
           <span className="bold-text">10</span> million dollars during a 24 hour period will be used
           to buy NEC.
@@ -34,7 +57,7 @@ class BuyAndBurn extends Component {
             <div className="buy-and-burn__progress-bar-title-up">
               <span className="buy-and-burn__title-left">Current 24h trading volume</span>
               <span className="buy-and-burn__amount-left">
-                {Boolean(response) && this.numberWithSpace(response.TotalUSDValue)} USD
+                {Boolean(res) && this.numberWithSpace(res.TotalUSDValue)} USD
               </span>
             </div>
             <div className="buy-and-burn__progress-bar-title-up">
@@ -42,12 +65,11 @@ class BuyAndBurn extends Component {
               <span className="buy-and-burn__amount-right">3 000 000 USD</span>
             </div>
           </div>
-          <progress
-            max={3000000}
-            value={Boolean(response) && response.TotalUSDValue}
-            className="buy-and-burn__progress-bar"
-          ></progress>
+          <div className={'progress-bar'}>
+            <div className={'current-progress'} style={{ width: widthProgressBar + '%' }}></div>
+          </div>
         </div>
+        <br />
         <br />
         <p className="landing__section-content">
           This will be operated using a smart-contract auction similar to that developed and
@@ -62,21 +84,3 @@ class BuyAndBurn extends Component {
     );
   }
 }
-
-const mapStateToProps = state => {
-  const { response } = state.totalUSD;
-  return { response };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    geTotalUSD: () => {
-      dispatch(geTotalUSD());
-    },
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BuyAndBurn);

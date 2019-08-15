@@ -1,6 +1,5 @@
 .bold-text {
-  //font-family: Montserrat;
-  font-style: normal;
+  font-family: Montserrat;
   font-weight: 600;
   font-size: 24px;
   line-height: 22px;
@@ -9,21 +8,6 @@
 
 .buy-and-burn__progress-bar-content {
   margin-bottom: 25px;
-}
-
-.buy-and-burn__progress-bar {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 520px;
-  height: 20px;
-}
-
-.buy-and-burn__progress-bar::-webkit-progress-bar {
-  background-color: #2f3864;
-}
-
-.buy-and-burn__progress-bar::-webkit-progress-value {
-  background-color: #ffffff;
 }
 
 .buy-and-burn__progress-bar-title {
@@ -36,8 +20,7 @@
 
 .buy-and-burn__title-right,
 .buy-and-burn__title-left {
-  //font-family: Montserrat;
-  font-style: normal;
+  font-family: Montserrat;
   font-weight: 500;
   font-size: 14px;
   line-height: 30px;
@@ -50,10 +33,27 @@
 
 .buy-and-burn__amount-right,
 .buy-and-burn__amount-left {
-  //font-family: Montserrat;
-  font-style: normal;
+  font-family: Montserrat;
   font-weight: 600;
   font-size: 24px;
   line-height: 32px;
   color: #ffffff;
+}
+
+.progress-bar {
+  position: relative;
+  width: 520px;
+  height: 20px;
+  background-color: #2f3864;
+}
+
+.current-progress {
+  position: absolute;
+  background-color: #ffffff;
+  height: 20px;
+  width: 0%;
+}
+
+.section-margin {
+  margin-bottom: 25px;
 }

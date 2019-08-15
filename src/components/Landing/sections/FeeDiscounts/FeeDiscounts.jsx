@@ -1,35 +1,31 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import './FeeDiscounts.scss';
 
 export default class FeeDiscounts extends Component {
+  state = { ownNEC: null };
+
   validate = evt => {
-    let theEvent = evt || window.event;
-    let key;
-    if (theEvent.type === 'paste') {
-      key = event.clipboardData.getData('text/plain');
-    } else {
-      key = theEvent.keyCode || theEvent.which;
-      key = String.fromCharCode(key);
-    }
+    let key = evt.keyCode || evt.which;
+    key = String.fromCharCode(key);
     const regex = /[0-9]|\./;
+
     if (!regex.test(key)) {
-      theEvent.returnValue = false;
-      if (theEvent.preventDefault) theEvent.preventDefault();
+      evt.returnValue = false;
+      if (evt.preventDefault) evt.preventDefault();
     }
   };
 
-  calcReceive = () => {
-    const input = this.receiveInput.current;
-    input.value = this.ownInput.current.value * 100;
+  calcReceive = evt => {
+    this.setState({
+      ownNEC: evt.target.value,
+    });
   };
-
-  ownInput = createRef();
-  receiveInput = createRef();
 
   render() {
-    console.log('prank ', this.ownInput.current);
+    const { ownNEC } = this.state;
+
     return (
       <section className="landing__section">
         <p className="landing__section-content">
@@ -52,13 +48,11 @@ export default class FeeDiscounts extends Component {
               </label>
               <span className="fee-discounts__input-nec right">
                 <input
-                  ref={this.ownInput}
                   type="text"
                   id="own"
                   className="fee-discounts__input"
-                  onKeyPress={this.validate}
                   onChange={this.calcReceive}
-                  defaultValue={0}
+                  onKeyPress={this.validate}
                 />
               </span>
             </div>
@@ -69,28 +63,24 @@ export default class FeeDiscounts extends Component {
               <label htmlFor="discount" className="fee-discounts__label">
                 Receive 20% Fee discount ON
               </label>
-              <span className="fee-discounts__input-percent right">
-                <input
-                  ref={this.receiveInput}
-                  type="text"
-                  id="discount"
-                  className="fee-discounts__input"
-                  onKeyPress={this.validate}
-                  value={Boolean(this.ownInput.current) ? this.ownInput.current.value * 100 : null}
-                />
+              <span
+                className="fee-discounts__input-percent fee-discounts__receive-usd right"
+                id="discount"
+              >
+                <p className={'fee-discount__receive-text'}>{ownNEC * 100}</p>
               </span>
               <p className="fee-discounts__receive-label-bottom">30-day Trading volume</p>
             </div>
           </div>
-          <Link to="/" className="fee-discounts__link">
+          <a href="/" className="fee-discounts__link">
             View fee calculation table
-          </Link>
+          </a>
         </div>
         <br />
         <p className="landing__section-content">Start trading on Ethfinex Trustless</p>
-        <Link to="/" className="new-listings__link trading">
+        <a href="/" className="new-listings__link trading">
           Start Trading
-        </Link>
+        </a>
       </section>
     );
   }

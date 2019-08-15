@@ -3,7 +3,6 @@
   flex-direction: column;
   align-items: center;
   mix-blend-mode: normal;
-  //opacity: 0.2;
   border: 1px solid #ffffff;
   box-sizing: border-box;
   padding: 35px;
@@ -16,8 +15,7 @@
 }
 
 .fee-discounts__input {
-  //font-family: Montserrat;
-  font-style: normal;
+  font-family: Montserrat;
   font-weight: 600;
   font-size: 24px;
   line-height: 32px;
@@ -27,7 +25,6 @@
   color: #fff;
   width: 200px;
   background: transparent;
-  padding-left: 12px;
 }
 
 .fee-discounts__input:focus {
@@ -38,8 +35,7 @@
 
 .fee-discounts__label,
 .fee-discounts__receive-label-bottom {
-  //font-family: Montserrat;
-  font-style: normal;
+  font-family: Montserrat;
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;
@@ -90,16 +86,15 @@
   top: 0;
   content: 'USD';
   font-size: 26px;
+  font-weight: 500;
 }
 
 .fee-discounts__input-percent.right:after {
-  right: 32px;
+  right: 5px;
 }
 
 .fee-discounts__arrows {
-  margin-top: 40px;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin: 40px 20px 0 20px;
 }
 
 .trading {
@@ -117,4 +112,24 @@
 .buy-and-burn__progress-bar-title-up {
   display: flex;
   flex-direction: column;
+}
+
+.fee-discounts__receive-usd {
+  width: 200px;
+  height: 35px;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  border: none;
+  border-bottom: 1px solid #4d5475;
+  transition: 0.2s;
+  color: #fff;
+  background: transparent;
+}
+
+.fee-discount__receive-text {
+  padding: 0;
+  margin: 0;
+  width: 128px;
+  overflow: hidden;
 }
