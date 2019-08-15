@@ -1,34 +1,49 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 import './FeeDiscounts.scss';
 
 export default class FeeDiscounts extends Component {
-  state = { ownNEC: null };
-
-  validate = evt => {
-    let key = evt.keyCode || evt.which;
-    key = String.fromCharCode(key);
-    const regex = /[0-9]|\./;
-
-    if (!regex.test(key)) {
-      evt.returnValue = false;
-      if (evt.preventDefault) evt.preventDefault();
-    }
+  state = {
+    necValue: '',
   };
 
-  calcReceive = evt => {
+  onNecValueChange = e => {
+    const { value } = e.target;
+
     this.setState({
-      ownNEC: evt.target.value,
+      necValue: this.validateValue(value),
     });
   };
 
+  validateValue = value => {
+    const regex = /^\d+(\.\d+)?$/;
+    const lastChar = value.charAt(value.length - 1);
+    const valueArray = value.split('.');
+    const isTooMuchDotes = valueArray.length > 2;
+    let filteredValue = value;
+
+    if (value && (!regex.test(value) || isTooMuchDotes || lastChar !== '.')) {
+      if (isTooMuchDotes) {
+        valueArray.length = 2;
+        filteredValue =
+          valueArray
+            .join('.')
+            .match(/[0-9]|\./gi)
+            .join('') || '';
+      } else {
+        const matchedValue = value.match(/[0-9]|\./gi).join('');
+        filteredValue = matchedValue === '.' ? '' : matchedValue;
+      }
+    }
+    return filteredValue || '';
+  };
+
   render() {
-    const { ownNEC } = this.state;
+    const { necValue } = this.state;
 
     return (
       <section className="landing__section">
-        <p className="landing__section-content">
+        <p className="landing__section-content fee-discounts__content">
           Ethfinex Trustless is the most liquid and advanced decentralized exchange.
           <br />
           <br />
@@ -37,38 +52,37 @@ export default class FeeDiscounts extends Component {
           <br />
           <br />
           As a consequence holding Nectar will entitle traders to fee discounts based
-          <br />
         </p>
-        <br />
         <div className="fee-discounts__calculator-content">
           <div className="fee-discounts__calculator">
             <div className="fee-discounts__input-content">
               <label htmlFor="own" className="fee-discounts__label">
                 Own
               </label>
-              <span className="fee-discounts__input-nec right">
+              <div className="fee-discounts__input-nec right">
                 <input
                   type="text"
+                  inputMode="numeric"
                   id="own"
                   className="fee-discounts__input"
-                  onChange={this.calcReceive}
-                  onKeyPress={this.validate}
+                  value={necValue}
+                  onChange={this.onNecValueChange}
                 />
-              </span>
+              </div>
             </div>
             <div className="fee-discounts__arrows">
-              <img src="/images/icon-arrows.svg" alt="" />
+              <img src="/images/landingIcons/icon-arrows.svg" alt="" />
             </div>
             <div className="fee-discounts__input-content">
               <label htmlFor="discount" className="fee-discounts__label">
                 Receive 20% Fee discount ON
               </label>
-              <span
+              <div
                 className="fee-discounts__input-percent fee-discounts__receive-usd right"
                 id="discount"
               >
-                <p className={'fee-discount__receive-text'}>{ownNEC * 100}</p>
-              </span>
+                <p className="fee-discount__receive-text">{+necValue * 100}</p>
+              </div>
               <p className="fee-discounts__receive-label-bottom">30-day Trading volume</p>
             </div>
           </div>
@@ -77,7 +91,9 @@ export default class FeeDiscounts extends Component {
           </a>
         </div>
         <br />
-        <p className="landing__section-content">Start trading on Ethfinex Trustless</p>
+        <p className="landing__section-content fee-discount__section-margin">
+          Start trading on Ethfinex Trustless
+        </p>
         <a href="/" className="new-listings__link trading">
           Start Trading
         </a>
